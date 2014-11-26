@@ -8,7 +8,7 @@
  * @property string $nombre
  * @property string $apellido
  * @property string $email
- * @property integer $estudiante
+ * @property string $estudiante
  * @property string $sexo
  * @property string $color
  */
@@ -31,8 +31,7 @@ class Persona extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('nombre, apellido, email, estudiante, sexo, color', 'required'),
-			array('estudiante', 'numerical', 'integerOnly'=>true),
-			array('nombre, apellido, color', 'length', 'max'=>20),
+			array('nombre, apellido, color, estudiante', 'length', 'max'=>20),
 			array('email', 'length', 'max'=>30),
 			array('sexo', 'length', 'max'=>10),
 			// The following rule is used by search().
@@ -90,7 +89,7 @@ class Persona extends CActiveRecord
 		$criteria->compare('nombre',$this->nombre,true);
 		$criteria->compare('apellido',$this->apellido,true);
 		$criteria->compare('email',$this->email,true);
-		$criteria->compare('estudiante',$this->estudiante);
+		$criteria->compare('estudiante',$this->estudiante, true);
 		$criteria->compare('sexo',$this->sexo,true);
 		$criteria->compare('color',$this->color,true);
 

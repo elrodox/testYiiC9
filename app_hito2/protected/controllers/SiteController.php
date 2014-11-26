@@ -20,7 +20,7 @@ class SiteController extends Controller
 			),
 		);
 	}
-
+	
 	/**
 	 * This is the default 'index' action that is invoked
 	 * when an action is not explicitly requested by users.
@@ -29,7 +29,11 @@ class SiteController extends Controller
 	{
 		// renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
-		$this->render('index');
+		if(isset($_REQUEST['ajax'])){
+			$this->renderPartial("index");
+		}else{
+			$this->render("index");
+		}
 	}
 
 	/**

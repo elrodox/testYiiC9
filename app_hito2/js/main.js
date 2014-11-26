@@ -2,15 +2,33 @@
  * Created by elrodox on 26/11/14.
  */
 
-
-$("#persona-form").submit(function(e){
+$("a").click(function(e){
     e.preventDefault();
-    var data=$("#persona-form").serialize();
+    $(".active").removeClass("active");
+    $(this).parent().addClass("active");
+    var link = $(this).attr("href");
+    
+    $.get(link, {ajax:1}, function(resp, estado){
+        $("#contenido").fadeOut(300, function(){
+            $("#contenido").html(resp);
+            $("#contenido").fadeIn(300);
+        });
+    });
+    
+});
+
+$("body").on("submit", "#formulario", function(e){
+    e.preventDefault();
+    e.stopPropagation();
+    var data=$("#formulario").serialize();
+    console.log(data);
     $.post(
-        $(this).attr("action"),
-        $("#persona-form").serialize(),
-        function(data){
-            $("tbody.lista-personas").append(data);
+        $(this).attr("action"), // "index.php?r=persona/create"
+        data, // data
+        function(resp, estado){
+            console.log('estado: '+estado);
+            console.log('resp: '+resp);
+            $("tbody.lista-personas").append(resp);
         }
     );
     // $.ajax({
@@ -28,4 +46,26 @@ $("#persona-form").submit(function(e){
     //     },
     //     dataType:'html'
     // });
+});
+$("body").on("click", "#editar", function(e){
+    alert("oli");
+});
+
+$("body").on("click", "#eliminar", function(e){
+    var tr = $(this).parent().parent();
+    var valorID = tr.find("td.id").html();
+    console.log("id: "+valorID);
+    $.get(
+        $(this).attr("href"),
+        {
+            id: valorID
+        },
+        function(resp, estado){
+            console.log(estado);
+            console.log(""+ resp);
+            tr.fadeOut(1000, function(){
+                tr.remove()
+            });
+        }
+    );
 });
