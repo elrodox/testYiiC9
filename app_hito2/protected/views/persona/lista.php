@@ -2,7 +2,12 @@
     /* @var $this PersonaController */
     /* @var $personas Array */
 ?>
-<h1>Listado de Personas</h1>
+
+<div class="row">
+    <h1>Listado de Personas</h1>
+    <button class="mostrar-form-nueva-persona btn btn-success"><span class="glyphicon glyphicon-add"></span>Nueva Persona</button>
+</div>
+<br>
 <!--<div class="table-responsive">-->
     <table class="table table-hover table-striped">
         <tr>

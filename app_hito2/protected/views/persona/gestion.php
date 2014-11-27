@@ -4,11 +4,11 @@
 ?>
 <div class="container">
     <div class="row">
-        <div class="col-xs-4">
+        <div id="columna-form" class="" style="display: none;">
             <br>
             <?php $this->renderPartial("form"); ?>
         </div>
-        <div class="col-xs-8">
+        <div id="columna-tabla" class="col-xs-12">
             <?php $this->renderPartial("lista", array('personas'=>$personas)); ?>
         </div>
     </div>

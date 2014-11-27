@@ -20,7 +20,7 @@ class PersonaController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index', 'gestion', 'eliminar', 'create'),
+				'actions'=>array('index', 'gestion', 'eliminar', 'create', 'actualizar'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -36,7 +36,7 @@ class PersonaController extends Controller
 			),
 		);
 	}
-	
+	// ------------------ ACCIONES HITO 2
 	public function actionIndex(){
 		if(isset($_REQUEST['ajax'])){
 			$this->renderPartial("index");
@@ -51,11 +51,29 @@ class PersonaController extends Controller
 		}else{
 			$this->render("gestion", array("personas"=>$personas));
 		}
-		
 	}
+	
 	public function actionEliminar($id){
 		$this->loadModel($id)->delete();
 	}
+	
+	public function actionActualizar(){
+		$id = $_POST['id'];
+		$model=$this->loadModel($id);
+		if(isset($_POST['Persona']))
+		{
+			$model->attributes=$_POST['Persona'];
+			if(!isset($model->estudiante)) $model->estudiante="off";
+			if($model->save()){
+				$personas = Persona::model()->findAll();
+				$this->renderPartial("lista", array("personas"=>$personas));
+			}
+				
+		}else{
+            echo "else";
+        }
+	}
+	
 	public function actionCreate()
 	{
 		$model=new Persona;
@@ -66,11 +84,9 @@ class PersonaController extends Controller
 			if(!isset($model->estudiante)) $model->estudiante="off";
 			if($model->save())
                 $this->renderPartial('_ver', array('persona'=> $model));
-            
 		}else{
             echo "else";
         }
-        
 	}
 	
 	// -------------------------  ACCIONES CREADAS POR YII
